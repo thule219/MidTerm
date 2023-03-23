@@ -30,17 +30,22 @@ class MainActivity : AppCompatActivity() {
         val userName = editUserName.text.toString()
         val password = editPassword.text.toString()
         val confirm = confirmPassword.text.toString()
-        if(email.isNotEmpty()&&userName.isNotEmpty()&&password.isNotEmpty()&&confirm==password){
-            val user = User(null,email, userName, password)
-            GlobalScope.launch(Dispatchers.IO) {
-                userDB?.userDao()?.register(user)
+        if(email.isNotEmpty()&&userName.isNotEmpty()&&password.isNotEmpty()){
+            if(confirm==password){
+                val user = User(null,email, userName, password)
+                GlobalScope.launch(Dispatchers.IO) {
+                    userDB?.userDao()?.register(user)
 
+                }
+                editEmail.text.clear()
+                editUserName.text.clear()
+                editPassword.text.clear()
+                confirmPassword.text.clear()
+                Toast.makeText(this,"Đăng kí thành công",Toast.LENGTH_SHORT).show()
+
+            }else{
+                Toast.makeText(this,"Nhập mật khẩu xác nhận đúng",Toast.LENGTH_SHORT).show()
             }
-            editEmail.text.clear()
-            editUserName.text.clear()
-            editPassword.text.clear()
-            confirmPassword.text.clear()
-            Toast.makeText(this,"Đăng kí thành công",Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(this,"Vui lòng điền đầy đủ",Toast.LENGTH_SHORT).show()
         }
